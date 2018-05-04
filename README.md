@@ -9,12 +9,16 @@ Nimbigwig can be installed via [Nimble](https://github.com/nim-lang/nimble):
 ```
 > nimble install nimgen
 
-> nimble install nimbigwig
+> git clone https://github.com/genotrance/nimbigwig
+> cd nimbigwig
+> nimble install -y
 ```
 
 This will download, wrap and install nimbigwig in the standard Nimble package location, typically ~/.nimble. Once installed, it can be imported into any Nim program.
 
 __Usage__
+
+Module documentation can be found [here](http://nimgen.genotrance.com/nimbigwig).
 
 ```nim
 import nimbigwig/bigWig
