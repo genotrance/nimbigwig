@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.1"
+version       = "0.1.2"
 author        = "genotrance"
 description   = "libBigWig wrapper for Nim"
 license       = "MIT"
@@ -9,19 +9,22 @@ skipDirs = @["tests"]
 
 # Dependencies
 
-requires "nimgen >= 0.1.5"
+requires "nimgen >= 0.4.0"
 
-import distros
+var
+  name = "nimbigwig"
+  cmd = when defined(Windows): "cmd /c " else: ""
 
-var cmd = ""
-if detectOs(Windows):
-    cmd = "cmd /c "
+mkDir(name)
 
-task setup, "Download and generate":
-    exec cmd & "nimgen nimbigwig.cfg"
+task setup, "Checkout and generate":
+  if gorgeEx(cmd & "nimgen").exitCode != 0:
+    withDir(".."):
+      exec "nimble install nimgen -y"
+  exec cmd & "nimgen " & name & ".cfg"
 
 before install:
-    setupTask()
+  setupTask()
 
-task test, "Test":
-    exec "nim c -r tests/testbw.nim"
+task test, "Run tests":
+  exec "nim c -r tests/t" & name & ".nim"
